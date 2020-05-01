@@ -19,7 +19,7 @@ jobs:
       - run: flutter config --enable-web
       - run: flutter pub get
       - run: flutter build web --release
-      - run: cp build/web/* public/
+      - run: cp -R build/web/* public/
       - uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting
