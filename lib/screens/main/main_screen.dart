@@ -1,5 +1,11 @@
+import 'dart:js' as js;
+
+import 'package:devdeejay_portfolio_app/screens/contact/contact_screen.dart';
+import 'package:devdeejay_portfolio_app/screens/experience/experience_screen.dart';
 import 'package:devdeejay_portfolio_app/screens/home/home_screen.dart';
+import 'package:devdeejay_portfolio_app/screens/learn/learn_screen.dart';
 import 'package:devdeejay_portfolio_app/screens/main/main_screen_viewmodel.dart';
+import 'package:devdeejay_portfolio_app/screens/project/project_screen.dart';
 import 'package:devdeejay_portfolio_app/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +13,7 @@ import 'package:provider_architecture/provider_architecture.dart';
 
 class MainScreenPage extends StatelessWidget {
   BuildContext buildContext;
+  MainScreenViewModel mainScreenViewModel;
 
   final List<String> navBarItems = [
     "Home",
@@ -15,7 +22,13 @@ class MainScreenPage extends StatelessWidget {
     "Learn",
     "Contact"
   ];
-  static final List<Widget> listOfWidgets = [HomeScreenWidget()];
+  static final List<Widget> listOfWidgets = [
+    HomeScreenWidget(),
+    ProjectScreenWidget(),
+    ExperienceScreenWidget(),
+    LearnScreenWidget(),
+    ContactScreenWidget(),
+  ];
   static int indexToShow = 0;
   Widget widgetToShow = listOfWidgets[indexToShow];
 
@@ -34,23 +47,36 @@ class MainScreenPage extends StatelessWidget {
     return Expanded(
       child: Container(
         child: Column(
-          children: <Widget>[
-            buildNavBar(context),
-            Expanded(
-              child: ViewModelProvider<HomeScreenViewModel>.withConsumer(
-                viewModel: HomeScreenViewModel(),
-                builder: (context, viewmodel, child) {
-                  return widgetToShow;
-                },
-              ),
-            )
-          ],
+          children: <Widget>[buildNavBar(context), buildMidBody()],
         ),
       ),
     );
   }
 
+  Expanded buildMidBody() {
+    return Expanded(
+      child: ViewModelProvider<MainScreenViewModel>.withConsumer(
+        viewModel: MainScreenViewModel(),
+        builder: (context, viewmodel, child) {
+          mainScreenViewModel = viewmodel;
+          return listOfWidgets[mainScreenViewModel.currentScreenIndex];
+        },
+      ),
+    );
+  }
+
   Widget buildNavBar(BuildContext context) {
+    List<Widget> listOfNavBarWidgets = [];
+
+    for (int i = 0; i < navBarItems.length; i++) {
+      listOfNavBarWidgets.add(buildNavBarTextItem(navBarItems[i], (e) {
+        mainScreenViewModel.setScreenToShow(i);
+      }));
+      listOfNavBarWidgets.add(SizedBox(
+        width: 56,
+      ));
+    }
+
     return Container(
       height: 80.5,
       decoration: BoxDecoration(
@@ -65,21 +91,7 @@ class MainScreenPage extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    buildNavBarTextItem("Home"),
-                    SizedBox(
-                      width: 56,
-                    ),
-                    buildNavBarTextItem("Projects"),
-                    SizedBox(
-                      width: 56,
-                    ),
-                    buildNavBarTextItem("Learn"),
-                    SizedBox(
-                      width: 56,
-                    ),
-                    buildNavBarTextItem("Contact"),
-                  ],
+                  children: listOfNavBarWidgets,
                 ),
               ),
             ),
@@ -89,9 +101,15 @@ class MainScreenPage extends StatelessWidget {
     );
   }
 
-  Text buildNavBarTextItem(String title) => Text(
-        title.toUpperCase(),
-        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+  Widget buildNavBarTextItem(String title, Function onHover) => MouseRegion(
+        onHover: onHover,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
+            title.toUpperCase(),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+          ),
+        ),
       );
 
   Widget buildLeftSideBar() {
