@@ -34,23 +34,33 @@ class MainScreenPage extends StatelessWidget {
     return Expanded(
       child: Container(
         child: Column(
-          children: <Widget>[
-            buildNavBar(context),
-            Expanded(
-              child: ViewModelProvider<HomeScreenViewModel>.withConsumer(
-                viewModel: HomeScreenViewModel(),
-                builder: (context, viewmodel, child) {
-                  return widgetToShow;
-                },
-              ),
-            )
-          ],
+          children: <Widget>[buildNavBar(context), buildMidBody()],
         ),
       ),
     );
   }
 
+  Expanded buildMidBody() {
+    return Expanded(
+      child: ViewModelProvider<HomeScreenViewModel>.withConsumer(
+        viewModel: HomeScreenViewModel(),
+        builder: (context, viewmodel, child) {
+          return widgetToShow;
+        },
+      ),
+    );
+  }
+
   Widget buildNavBar(BuildContext context) {
+    List<Widget> listOfNavBarWidgets = [];
+
+    for (var item in navBarItems) {
+      listOfNavBarWidgets.add(buildNavBarTextItem(item));
+      listOfNavBarWidgets.add(SizedBox(
+        width: 56,
+      ));
+    }
+
     return Container(
       height: 80.5,
       decoration: BoxDecoration(
@@ -65,21 +75,7 @@ class MainScreenPage extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    buildNavBarTextItem("Home"),
-                    SizedBox(
-                      width: 56,
-                    ),
-                    buildNavBarTextItem("Projects"),
-                    SizedBox(
-                      width: 56,
-                    ),
-                    buildNavBarTextItem("Learn"),
-                    SizedBox(
-                      width: 56,
-                    ),
-                    buildNavBarTextItem("Contact"),
-                  ],
+                  children: listOfNavBarWidgets,
                 ),
               ),
             ),
