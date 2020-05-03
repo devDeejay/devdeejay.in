@@ -1,3 +1,12 @@
 import 'package:flutter/cupertino.dart';
 
-class HomeScreenViewModel extends ChangeNotifier {}
+class MainScreenViewModel extends ChangeNotifier {
+  int _currentScreenIndex = 0;
+
+  int get currentScreenIndex => _currentScreenIndex;
+
+  void setScreenToShow(int index) {
+    _currentScreenIndex = index;
+    notifyListeners();
+  }
+}

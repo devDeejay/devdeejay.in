@@ -1,5 +1,11 @@
+import 'dart:js' as js;
+
+import 'package:devdeejay_portfolio_app/screens/contact/contact_screen.dart';
+import 'package:devdeejay_portfolio_app/screens/experience/experience_screen.dart';
 import 'package:devdeejay_portfolio_app/screens/home/home_screen.dart';
+import 'package:devdeejay_portfolio_app/screens/learn/learn_screen.dart';
 import 'package:devdeejay_portfolio_app/screens/main/main_screen_viewmodel.dart';
+import 'package:devdeejay_portfolio_app/screens/project/project_screen.dart';
 import 'package:devdeejay_portfolio_app/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +13,7 @@ import 'package:provider_architecture/provider_architecture.dart';
 
 class MainScreenPage extends StatelessWidget {
   BuildContext buildContext;
+  MainScreenViewModel mainScreenViewModel;
 
   final List<String> navBarItems = [
     "Home",
@@ -15,7 +22,13 @@ class MainScreenPage extends StatelessWidget {
     "Learn",
     "Contact"
   ];
-  static final List<Widget> listOfWidgets = [HomeScreenWidget()];
+  static final List<Widget> listOfWidgets = [
+    HomeScreenWidget(),
+    ProjectScreenWidget(),
+    ExperienceScreenWidget(),
+    LearnScreenWidget(),
+    ContactScreenWidget(),
+  ];
   static int indexToShow = 0;
   Widget widgetToShow = listOfWidgets[indexToShow];
 
@@ -42,10 +55,11 @@ class MainScreenPage extends StatelessWidget {
 
   Expanded buildMidBody() {
     return Expanded(
-      child: ViewModelProvider<HomeScreenViewModel>.withConsumer(
-        viewModel: HomeScreenViewModel(),
+      child: ViewModelProvider<MainScreenViewModel>.withConsumer(
+        viewModel: MainScreenViewModel(),
         builder: (context, viewmodel, child) {
-          return widgetToShow;
+          mainScreenViewModel = viewmodel;
+          return listOfWidgets[mainScreenViewModel.currentScreenIndex];
         },
       ),
     );
@@ -54,8 +68,10 @@ class MainScreenPage extends StatelessWidget {
   Widget buildNavBar(BuildContext context) {
     List<Widget> listOfNavBarWidgets = [];
 
-    for (var item in navBarItems) {
-      listOfNavBarWidgets.add(buildNavBarTextItem(item));
+    for (int i = 0; i < navBarItems.length; i++) {
+      listOfNavBarWidgets.add(buildNavBarTextItem(navBarItems[i], (e) {
+        mainScreenViewModel.setScreenToShow(i);
+      }));
       listOfNavBarWidgets.add(SizedBox(
         width: 56,
       ));
@@ -85,9 +101,15 @@ class MainScreenPage extends StatelessWidget {
     );
   }
 
-  Text buildNavBarTextItem(String title) => Text(
-        title.toUpperCase(),
-        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+  Widget buildNavBarTextItem(String title, Function onHover) => MouseRegion(
+        onHover: onHover,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
+            title.toUpperCase(),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+          ),
+        ),
       );
 
   Widget buildLeftSideBar() {

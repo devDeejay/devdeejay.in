@@ -2,7 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreenWidget extends StatelessWidget {
+class ExperienceScreenWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("building home");
@@ -22,18 +22,10 @@ class HomeScreenWidget extends StatelessWidget {
                   child: TyperAnimatedTextKit(
                       pause: Duration(seconds: 1),
                       isRepeatingAnimation: false,
-                      text: [
-                        "Hello",
-                        "I am",
-                        "devDeejay",
-                        "Flutter Developer",
-                        "Android Developer",
-                        "and you can call me DJ",
-                        "devDeejay"
-                      ],
+                      text: ["Experience"],
                       textStyle: TextStyle(
                           fontSize: MediaQuery.of(context).size.width * 0.08,
-                          color: Colors.white,
+                          color: Colors.redAccent,
                           fontFamily: 'playlist'),
                       textAlign: TextAlign.start,
                       alignment:
