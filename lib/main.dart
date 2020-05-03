@@ -1,6 +1,7 @@
-import 'package:devdeejay_portfolio_app/screens/main/main_screen.dart';
 import 'package:devdeejay_portfolio_app/utils/constants.dart';
 import 'package:flutter/material.dart';
+
+import 'screens/main/main_screen.dart';
 
 void main() {
   runApp(MyApp());
