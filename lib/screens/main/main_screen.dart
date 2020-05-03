@@ -60,14 +60,28 @@ class MainScreenPage extends StatelessWidget {
         children: <Widget>[
           Container(
             width: MediaQuery.of(context).size.width * 0.6,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                buildNavBarTextItem("Home"),
-                buildNavBarTextItem("Projects"),
-                buildNavBarTextItem("Learn"),
-                buildNavBarTextItem("Contact"),
-              ],
+            child: Center(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    buildNavBarTextItem("Home"),
+                    SizedBox(
+                      width: 56,
+                    ),
+                    buildNavBarTextItem("Projects"),
+                    SizedBox(
+                      width: 56,
+                    ),
+                    buildNavBarTextItem("Learn"),
+                    SizedBox(
+                      width: 56,
+                    ),
+                    buildNavBarTextItem("Contact"),
+                  ],
+                ),
+              ),
             ),
           ),
         ],
