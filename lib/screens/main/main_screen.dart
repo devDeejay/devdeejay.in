@@ -52,9 +52,9 @@ class MainScreenPage extends StatelessWidget {
 
   Widget buildNavBar(BuildContext context) {
     return Container(
-      height: 80,
+      height: 80.5,
       decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(width: 0.5, color: Colors.white))),
+          border: Border(bottom: BorderSide(width: 0.4, color: Colors.white))),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -65,7 +65,7 @@ class MainScreenPage extends StatelessWidget {
               children: <Widget>[
                 buildNavBarTextItem("Home"),
                 buildNavBarTextItem("Projects"),
-                buildNavBarTextItem("Share"),
+                buildNavBarTextItem("Learn"),
                 buildNavBarTextItem("Contact"),
               ],
             ),
@@ -98,40 +98,54 @@ class MainScreenPage extends StatelessWidget {
 
   Widget buildSocialMediaIcons() {
     return Expanded(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(16),
-            child: buildImage("assets/images/github_icon.png", 32, () {
-              launchURL("https://medium.com/@devDeeJay");
-            }),
+      child: Container(
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(16),
+                  child: buildImage("assets/images/github_icon.png", 32, () {
+                    launchURL("https://github.com/devDeejay");
+                  }),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(16),
+                  child: buildImage("assets/images/medium_icon.png", 32, () {
+                    launchURL("https://medium.com/@devDeeJay");
+                  }),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(16),
+                  child: buildImage("assets/images/linkedin_icon.png", 32, () {
+                    launchURL("https://www.linkedin.com/in/devdeejay/");
+                  }),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(16),
+                  child: buildImage("assets/images/stackoverflow_icon.png", 32,
+                      () {
+                    launchURL(
+                        "https://stackoverflow.com/users/6145568/devdeejay");
+                  }),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(16),
+                  child: buildImage("assets/images/facebook_icon.png", 32, () {
+                    launchURL("https://www.facebook.com/dhananjayt772");
+                  }),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(16),
+                  child: buildImage("assets/images/instagram_icon.png", 32, () {
+                    launchURL("https://www.instagram.com/dhanajay__trivedi/");
+                  }),
+                ),
+              ],
+            ),
           ),
-          Padding(
-            padding: EdgeInsets.all(16),
-            child: buildImage("assets/images/medium_icon.png", 32, () {
-              launchURL("https://medium.com/@devDeeJay");
-            }),
-          ),
-          Padding(
-            padding: EdgeInsets.all(16),
-            child: buildImage("assets/images/linkedin_icon.png", 32, () {
-              launchURL("https://medium.com/@devDeeJay");
-            }),
-          ),
-          Padding(
-            padding: EdgeInsets.all(16),
-            child: buildImage("assets/images/facebook_icon.png", 32, () {
-              launchURL("https://www.facebook.com/dhananjayt772");
-            }),
-          ),
-          Padding(
-            padding: EdgeInsets.all(16),
-            child: buildImage("assets/images/instagram_icon.png", 32, () {
-              launchURL("https://medium.com/@devDeeJay");
-            }),
-          ),
-        ],
+        ),
       ),
     );
   }
