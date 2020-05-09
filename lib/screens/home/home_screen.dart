@@ -42,64 +42,6 @@ class HomeScreenWidget extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              color: Colors.blueAccent,
-              width: screenWidth,
-              height: screenHeight,
-              child: Center(
-                child: SizedBox(
-                  child: TyperAnimatedTextKit(
-                      pause: Duration(seconds: 1),
-                      isRepeatingAnimation: false,
-                      text: [
-                        "Hello",
-                        "I am",
-                        "devDeejay",
-                        "Flutter Developer",
-                        "Android Developer",
-                        "and you can call me DJ",
-                        "devDeejay"
-                      ],
-                      textStyle: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 0.08,
-                          color: Colors.white,
-                          fontFamily: 'playlist'),
-                      textAlign: TextAlign.start,
-                      alignment:
-                          AlignmentDirectional.topStart // or Alignment.topLeft
-                      ),
-                ),
-              ),
-            ),
-            Container(
-              color: Colors.greenAccent,
-              width: screenWidth,
-              height: screenHeight,
-              child: Center(
-                child: SizedBox(
-                  child: TyperAnimatedTextKit(
-                      pause: Duration(seconds: 1),
-                      isRepeatingAnimation: false,
-                      text: [
-                        "Hello",
-                        "I am",
-                        "devDeejay",
-                        "Flutter Developer",
-                        "Android Developer",
-                        "and you can call me DJ",
-                        "devDeejay"
-                      ],
-                      textStyle: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 0.08,
-                          color: Colors.white,
-                          fontFamily: 'playlist'),
-                      textAlign: TextAlign.start,
-                      alignment:
-                          AlignmentDirectional.topStart // or Alignment.topLeft
-                      ),
-                ),
-              ),
-            ),
           ],
         ),
       ),

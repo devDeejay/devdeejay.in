@@ -9,4 +9,8 @@ class MainScreenViewModel extends ChangeNotifier {
     _currentScreenIndex = index;
     notifyListeners();
   }
+
+  void initialise() {
+    notifyListeners();
+  }
 }

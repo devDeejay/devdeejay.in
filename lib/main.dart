@@ -1,18 +1,23 @@
 import 'package:devdeejay_portfolio_app/utils/constants.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/main/main_screen.dart';
 
 void main() {
-  print("starting the app");
-  runApp(MyApp());
+  runApp(DevicePreview(
+    enabled: false,
+    builder: (BuildContext context) {
+      return MyApp();
+    },
+  ));
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      builder: DevicePreview.appBuilder,
       title: 'devDeejay',
       theme: ThemeData(
         primaryColor: kDarkGreyColor,

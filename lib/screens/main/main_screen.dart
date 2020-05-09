@@ -1,75 +1,148 @@
-import 'dart:js' as js;
-
-import 'package:devdeejay_portfolio_app/screens/contact/contact_screen.dart';
-import 'package:devdeejay_portfolio_app/screens/experience/experience_screen.dart';
-import 'package:devdeejay_portfolio_app/screens/home/home_screen.dart';
-import 'package:devdeejay_portfolio_app/screens/learn/learn_screen.dart';
+import 'package:devdeejay_portfolio_app/responsive/orientation_layout.dart';
+import 'package:devdeejay_portfolio_app/responsive/screen_type_layout.dart';
 import 'package:devdeejay_portfolio_app/screens/main/main_screen_viewmodel.dart';
-import 'package:devdeejay_portfolio_app/screens/project/project_screen.dart';
-import 'package:devdeejay_portfolio_app/utils/utils.dart';
+import 'package:devdeejay_portfolio_app/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider_architecture/provider_architecture.dart';
+import 'package:stacked/stacked.dart';
 
-class MainScreenPage extends StatelessWidget {
-  BuildContext buildContext;
+class MainScreenPage extends StatefulWidget {
+  @override
+  _MainScreenPageState createState() => _MainScreenPageState();
+}
+
+class _MainScreenPageState extends State<MainScreenPage> {
   MainScreenViewModel mainScreenViewModel;
-
-  final List<String> navBarItems = [
-    "Home",
-    "Projects",
-    "Experience",
-    "Learn",
-    "Contact"
-  ];
-  static final List<Widget> listOfWidgets = [
-    HomeScreenWidget(),
-    ProjectScreenWidget(),
-    ExperienceScreenWidget(),
-    LearnScreenWidget(),
-    ContactScreenWidget(),
-  ];
-  static int indexToShow = 0;
-  Widget widgetToShow = listOfWidgets[indexToShow];
 
   @override
   Widget build(BuildContext context) {
-    buildContext = context;
-    return Scaffold(
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[buildLeftSideBar(), buildMidSection(context)],
-      ),
+    return ViewModelBuilder<MainScreenViewModel>.reactive(
+      viewModelBuilder: () => MainScreenViewModel(),
+      onModelReady: (model) => model.initialise(),
+      builder: (buildContext, model, child) {
+        mainScreenViewModel = model;
+        return ScreenTypeLayout(
+          mobile: OrientationLayout(
+            portrait: _buildMobilePortraitLayout(context),
+            landscape: _buildMobilePortraitLayout(context),
+          ),
+          tablet: OrientationLayout(
+            portrait: _buildMobilePortraitLayout(context),
+            landscape: _buildLargeScreenLayout(context),
+          ),
+          desktop: OrientationLayout(
+            landscape: _buildLargeScreenLayout(context),
+            portrait: _buildLargeScreenLayout(context),
+          ),
+        );
+      },
     );
   }
 
-  Widget buildMidSection(BuildContext context) {
-    return Expanded(
-      child: Container(
-        child: Column(
-          children: <Widget>[buildNavBar(context), buildMidBody()],
+  Container _buildMobilePortraitLayout(BuildContext buildContext) {
+    return Container(
+      color: kDarkGreyColor,
+      child: Scaffold(
+        drawer: _buildMobileDrawer(buildContext),
+        appBar: _buildMobileAppBar(),
+        body: Column(
+          children: [
+            _buildContentBody(),
+          ],
         ),
       ),
     );
   }
 
-  Expanded buildMidBody() {
-    return Expanded(
-      child: ViewModelProvider<MainScreenViewModel>.withConsumer(
-        viewModel: MainScreenViewModel(),
-        builder: (context, viewmodel, child) {
-          mainScreenViewModel = viewmodel;
-          return listOfWidgets[mainScreenViewModel.currentScreenIndex];
-        },
+  Widget _buildMobileDrawer(BuildContext buildContext) {
+    List<Widget> listOfDrawerWidgets = [];
+
+    for (int i = 0; i < navBarItems.length; i++) {
+      listOfDrawerWidgets.add(_buildMobileDrawerTextItem(navBarItems[i], () {
+        mainScreenViewModel.setScreenToShow(i);
+        Navigator.pop(buildContext);
+      }));
+      listOfDrawerWidgets.add(SizedBox(
+        width: 56,
+      ));
+    }
+
+    return Container(
+      child: Drawer(
+        child: Row(
+          children: [
+            _buildVerticalListOfSocialMediaIcons(),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: listOfDrawerWidgets,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget buildNavBar(BuildContext context) {
+  Widget _buildVerticalListOfSocialMediaIcons() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: listOfSocialMediaWidgets,
+        ),
+      ),
+    );
+  }
+
+  AppBar _buildMobileAppBar() {
+    return AppBar(
+      elevation: 0,
+      title: Container(
+        height: 56,
+        child: Text(
+          "devdeejay",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 32, color: Colors.white, fontFamily: 'playlist'),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLargeScreenLayout(BuildContext context) {
+    return Scaffold(
+        body: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        _buildLeftSocialMediaSideBar(),
+        _buildLargeScreenBody(context)
+      ],
+    ));
+  }
+
+  Widget _buildLargeScreenBody(BuildContext context) {
+    return Expanded(
+      child: Container(
+        child: Column(
+          children: <Widget>[_buildTopNavBar(context), _buildContentBody()],
+        ),
+      ),
+    );
+  }
+
+  Expanded _buildContentBody() {
+    return Expanded(
+      child: listOfNavBarWidgets[mainScreenViewModel.currentScreenIndex],
+    );
+  }
+
+  Widget _buildTopNavBar(BuildContext context) {
     List<Widget> listOfNavBarWidgets = [];
 
     for (int i = 0; i < navBarItems.length; i++) {
-      listOfNavBarWidgets.add(buildNavBarTextItem(navBarItems[i], (e) {
+      listOfNavBarWidgets.add(_buildTopNavBarTextItem(navBarItems[i], (e) {
         mainScreenViewModel.setScreenToShow(i);
       }));
       listOfNavBarWidgets.add(SizedBox(
@@ -101,7 +174,19 @@ class MainScreenPage extends StatelessWidget {
     );
   }
 
-  Widget buildNavBarTextItem(String title, Function onHover) => MouseRegion(
+  Widget _buildMobileDrawerTextItem(String title, Function onTap) =>
+      GestureDetector(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
+            title.toUpperCase(),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+          ),
+        ),
+      );
+
+  Widget _buildTopNavBarTextItem(String title, Function onHover) => MouseRegion(
         onHover: onHover,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -112,7 +197,7 @@ class MainScreenPage extends StatelessWidget {
         ),
       );
 
-  Widget buildLeftSideBar() {
+  Widget _buildLeftSocialMediaSideBar() {
     return Container(
       width: 96,
       decoration: BoxDecoration(
@@ -121,60 +206,21 @@ class MainScreenPage extends StatelessWidget {
       )),
       child: Column(
         children: <Widget>[
-          buildTopLeftLogo(),
-          buildSocialMediaIcons(),
+          _buildTopLeftLogo(),
+          _buildSocialMediaIcons(),
         ],
       ),
     );
   }
 
-  Widget buildSocialMediaIcons() {
+  Widget _buildSocialMediaIcons() {
     return Expanded(
       child: Container(
         child: Center(
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.all(16),
-                  child: buildImage("assets/images/github_icon.png", 32, () {
-                    launchURL("https://github.com/devDeejay");
-                  }),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(16),
-                  child: buildImage("assets/images/medium_icon.png", 32, () {
-                    launchURL("https://medium.com/@devDeeJay");
-                  }),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(16),
-                  child: buildImage("assets/images/linkedin_icon.png", 32, () {
-                    launchURL("https://www.linkedin.com/in/devdeejay/");
-                  }),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(16),
-                  child: buildImage("assets/images/stackoverflow_icon.png", 32,
-                      () {
-                    launchURL(
-                        "https://stackoverflow.com/users/6145568/devdeejay");
-                  }),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(16),
-                  child: buildImage("assets/images/facebook_icon.png", 32, () {
-                    launchURL("https://www.facebook.com/dhananjayt772");
-                  }),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(16),
-                  child: buildImage("assets/images/instagram_icon.png", 32, () {
-                    launchURL("https://www.instagram.com/dhanajay__trivedi/");
-                  }),
-                ),
-              ],
+              children: listOfSocialMediaWidgets,
             ),
           ),
         ),
@@ -182,18 +228,7 @@ class MainScreenPage extends StatelessWidget {
     );
   }
 
-  Padding buildSingleSocialMediaIcon() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Icon(
-        Icons.description,
-        color: Colors.white,
-        size: 24,
-      ),
-    );
-  }
-
-  Widget buildTopLeftLogo() {
+  Widget _buildTopLeftLogo() {
     return Container(
       width: 300,
       decoration: BoxDecoration(

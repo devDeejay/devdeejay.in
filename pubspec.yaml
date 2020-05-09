@@ -18,9 +18,11 @@ dependencies:
   flutter_bloc: ^3.2.0
   equatable: ^1.1.1
   # provider architecture
-  provider_architecture: ^1.0.5
+  stacked: ^1.4.2
   # animated text
   animated_text_kit: ^2.0.1
+  # device preview
+  device_preview:
 
 dev_dependencies:
   flutter_test:
