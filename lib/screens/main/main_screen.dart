@@ -11,8 +11,32 @@ class MainScreenPage extends StatefulWidget {
   _MainScreenPageState createState() => _MainScreenPageState();
 }
 
-class _MainScreenPageState extends State<MainScreenPage> {
+class _MainScreenPageState extends State<MainScreenPage>
+    with SingleTickerProviderStateMixin {
+  Animation leftSlidingBarAnimation;
+  Animation topSlidingBarAnimation;
+  AnimationController slidingBarAnimationController;
+
   MainScreenViewModel mainScreenViewModel;
+
+  @override
+  void initState() {
+    super.initState();
+
+    slidingBarAnimationController =
+        AnimationController(vsync: this, duration: Duration(seconds: 1));
+
+    leftSlidingBarAnimation = Tween(begin: -0.1, end: 0.0).animate(
+        CurvedAnimation(
+            parent: slidingBarAnimationController,
+            curve: Interval(0.0, 1.0, curve: Curves.decelerate)));
+    topSlidingBarAnimation = Tween(begin: -0.2, end: 0.0).animate(
+        CurvedAnimation(
+            parent: slidingBarAnimationController,
+            curve: Interval(0.0, 1.0, curve: Curves.decelerate)));
+
+    slidingBarAnimationController.forward();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,12 +137,17 @@ class _MainScreenPageState extends State<MainScreenPage> {
 
   Widget _buildLargeScreenLayout(BuildContext context) {
     return Scaffold(
-        body: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        _buildLeftSocialMediaSideBar(),
-        _buildLargeScreenBody(context)
-      ],
+        body: AnimatedBuilder(
+      animation: slidingBarAnimationController,
+      builder: (BuildContext context, Widget child) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            _buildLeftSocialMediaSideBar(),
+            _buildLargeScreenBody(context)
+          ],
+        );
+      },
     ));
   }
 
@@ -150,26 +179,33 @@ class _MainScreenPageState extends State<MainScreenPage> {
       ));
     }
 
-    return Container(
-      height: 80.5,
-      decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(width: 0.4, color: Colors.white))),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            width: MediaQuery.of(context).size.width * 0.6,
-            child: Center(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: listOfNavBarWidgets,
+    return Transform(
+      transform: Matrix4.translationValues(
+          0.0,
+          topSlidingBarAnimation.value * MediaQuery.of(context).size.height,
+          0.0),
+      child: Container(
+        height: 80.5,
+        decoration: BoxDecoration(
+            border:
+                Border(bottom: BorderSide(width: 0.4, color: Colors.white))),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              width: MediaQuery.of(context).size.width * 0.6,
+              child: Center(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: listOfNavBarWidgets,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -198,17 +234,23 @@ class _MainScreenPageState extends State<MainScreenPage> {
       );
 
   Widget _buildLeftSocialMediaSideBar() {
-    return Container(
-      width: 96,
-      decoration: BoxDecoration(
-          border: Border(
-        right: BorderSide(width: 0.5, color: Colors.white.withOpacity(0.6)),
-      )),
-      child: Column(
-        children: <Widget>[
-          _buildTopLeftLogo(),
-          _buildSocialMediaIcons(),
-        ],
+    return Transform(
+      transform: Matrix4.translationValues(
+          leftSlidingBarAnimation.value * MediaQuery.of(context).size.width,
+          0.0,
+          0.0),
+      child: Container(
+        width: 96,
+        decoration: BoxDecoration(
+            border: Border(
+          right: BorderSide(width: 0.5, color: Colors.white.withOpacity(0.6)),
+        )),
+        child: Column(
+          children: <Widget>[
+            _buildTopLeftLogo(),
+            _buildSocialMediaIcons(),
+          ],
+        ),
       ),
     );
   }

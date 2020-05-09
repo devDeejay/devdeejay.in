@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:devdeejay_portfolio_app/screens/contact/contact_screen.dart';
 import 'package:devdeejay_portfolio_app/screens/experience/experience_screen.dart';
 import 'package:devdeejay_portfolio_app/screens/home/home_screen.dart';
-import 'package:devdeejay_portfolio_app/screens/learn/learn_screen.dart';
+import 'package:devdeejay_portfolio_app/screens/learn/library_screen.dart';
 import 'package:devdeejay_portfolio_app/screens/project/project_screen.dart';
 import 'package:devdeejay_portfolio_app/utils/utils.dart';
 import 'package:flutter/widgets.dart';
@@ -14,7 +14,7 @@ final List<String> navBarItems = [
   "Home",
   "Projects",
   "Experience",
-  "Learn",
+  "Library",
   "Contact"
 ];
 
@@ -68,5 +68,5 @@ final List<Widget> listOfNavBarWidgets = [
 final Widget homeScreenWidget = HomeScreenWidget();
 final Widget projectScreenWidget = ProjectScreenWidget();
 final Widget experienceScreenWidget = ExperienceScreenWidget();
-final Widget learnScreenWidget = LearnScreenWidget();
+final Widget learnScreenWidget = LibraryScreenWidget();
 final Widget contactScreenWidget = ContactScreenWidget();

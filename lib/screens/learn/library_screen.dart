@@ -3,16 +3,20 @@ import 'package:devdeejay_portfolio_app/screens/widgets/animated_screen_entry_wi
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ExperienceScreenWidget extends StatelessWidget {
+class LibraryScreenWidget extends StatefulWidget {
+  @override
+  _LibraryScreenWidgetState createState() => _LibraryScreenWidgetState();
+}
+
+class _LibraryScreenWidgetState extends State<LibraryScreenWidget> {
   @override
   Widget build(BuildContext context) {
-    print("building home");
     var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.height * 0.8;
 
     return AnimatedScreenEntryWidget(
       child: Container(
-        color: Colors.redAccent,
+        color: Colors.blue,
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
@@ -22,9 +26,11 @@ class ExperienceScreenWidget extends StatelessWidget {
                 child: Center(
                   child: SizedBox(
                     child: TyperAnimatedTextKit(
-                        pause: Duration(seconds: 1),
+                        pause: Duration(seconds: 3),
                         isRepeatingAnimation: false,
-                        text: ["My Experience"],
+                        text: [
+                          "Learn with DJ",
+                        ],
                         textStyle: TextStyle(
                             fontSize: MediaQuery.of(context).size.width * 0.08,
                             color: Colors.white,
