@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'screens/main/main_screen.dart';
 
 void main() {
-  runApp(DevicePreview(
+  /*runApp(DevicePreview(
     enabled: false,
     builder: (BuildContext context) {
       return MyApp();
     },
-  ));
+  ));*/
 
   return runApp(MyApp());
 }
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      builder: DevicePreview.appBuilder,
+      /*builder: DevicePreview.appBuilder,*/
       title: 'devDeejay',
       theme: ThemeData(
         primaryColor: kDarkGreyColor,
