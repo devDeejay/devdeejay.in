@@ -23,6 +23,8 @@ dependencies:
   animated_text_kit: ^2.0.1
   # device preview
   device_preview:
+  # cached network image
+  cached_network_image: ^2.2.0+1
 
 dev_dependencies:
   flutter_test:

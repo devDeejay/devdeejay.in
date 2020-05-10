@@ -24,7 +24,7 @@ class _MainScreenPageState extends State<MainScreenPage>
     super.initState();
 
     slidingBarAnimationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 1));
+        AnimationController(vsync: this, duration: Duration(seconds: 0));
 
     leftSlidingBarAnimation = Tween(begin: -0.1, end: 0.0).animate(
         CurvedAnimation(
@@ -193,7 +193,7 @@ class _MainScreenPageState extends State<MainScreenPage>
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              width: MediaQuery.of(context).size.width * 0.6,
+              width: MediaQuery.of(context).size.width * 0.8,
               child: Center(
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,

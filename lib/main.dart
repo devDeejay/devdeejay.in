@@ -1,7 +1,6 @@
 import 'package:devdeejay_portfolio_app/utils/constants.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
-
 import 'screens/main/main_screen.dart';
 
 void main() {
@@ -11,6 +10,8 @@ void main() {
       return MyApp();
     },
   ));
+
+  return runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class ContactScreenWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print("building home");
+    print("building Contact Screen");
     var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.height * 0.8;
 
@@ -32,9 +32,7 @@ class ContactScreenWidget extends StatelessWidget {
                             color: Colors.white,
                             fontFamily: 'playlist'),
                         textAlign: TextAlign.start,
-                        alignment: AlignmentDirectional
-                            .topStart // or Alignment.topLeft
-                        ),
+                        alignment: AlignmentDirectional.topStart),
                   ),
                 ),
               ),
