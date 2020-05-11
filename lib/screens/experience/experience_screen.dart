@@ -12,7 +12,6 @@ class ExperienceScreenWidget extends StatelessWidget {
 
     return AnimatedScreenEntryWidget(
       child: Container(
-        color: Colors.redAccent,
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
@@ -24,7 +23,7 @@ class ExperienceScreenWidget extends StatelessWidget {
                     child: TyperAnimatedTextKit(
                         pause: Duration(seconds: 1),
                         isRepeatingAnimation: false,
-                        text: ["My Experience"],
+                        text: ["Coming Soon"],
                         textStyle: TextStyle(
                             fontSize: MediaQuery.of(context).size.width * 0.08,
                             color: Colors.white,

@@ -62,8 +62,25 @@ class _BlogScreenState extends State<BlogScreen> {
     );
   }
 
-  Container buildListOfBlogs(List<Blog> listOfBlog) {
+  Widget buildListOfBlogs(List<Blog> listOfBlog) {
+    List<Widget> listOfBlogWidgets = [];
+
+    for (Blog blog in listOfBlog) {
+      listOfBlogWidgets.add(SingleBlogWidget(blog));
+    }
+
     return Container(
+      height: 280,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: listOfBlogWidgets,
+        ),
+      ),
+    );
+
+    /// TODO: ListView Builder not working for release mode in Flutter for web
+    /* return Container(
       height: 280,
       child: Expanded(
         child: ListView.builder(
@@ -73,7 +90,7 @@ class _BlogScreenState extends State<BlogScreen> {
             itemBuilder: (BuildContext context, int index) =>
                 SingleBlogWidget(listOfBlog[index])),
       ),
-    );
+    );*/
   }
 
   Widget buildPageTitle(BuildContext context) {

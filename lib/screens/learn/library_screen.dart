@@ -16,7 +16,6 @@ class _LibraryScreenWidgetState extends State<LibraryScreenWidget> {
 
     return AnimatedScreenEntryWidget(
       child: Container(
-        color: Colors.blue,
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
@@ -29,7 +28,7 @@ class _LibraryScreenWidgetState extends State<LibraryScreenWidget> {
                         pause: Duration(seconds: 3),
                         isRepeatingAnimation: false,
                         text: [
-                          "Learn with DJ",
+                          "devDeejay Library\nComing Soon",
                         ],
                         textStyle: TextStyle(
                             fontSize: MediaQuery.of(context).size.width * 0.08,

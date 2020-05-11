@@ -11,7 +11,6 @@ class ProjectScreenWidget extends StatelessWidget {
 
     return AnimatedScreenEntryWidget(
       child: Container(
-        color: Colors.green,
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
@@ -24,11 +23,11 @@ class ProjectScreenWidget extends StatelessWidget {
                         pause: Duration(seconds: 1),
                         isRepeatingAnimation: false,
                         text: [
-                          "My Projects",
+                          "devDeejay Projects\nComingSoon",
                         ],
                         textStyle: TextStyle(
                             fontSize: MediaQuery.of(context).size.width * 0.08,
-                            color: Colors.black,
+                            color: Colors.white,
                             fontFamily: 'playlist'),
                         textAlign: TextAlign.start,
                         alignment: AlignmentDirectional

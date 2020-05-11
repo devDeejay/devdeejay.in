@@ -12,7 +12,6 @@ class ContactScreenWidget extends StatelessWidget {
 
     return AnimatedScreenEntryWidget(
       child: Container(
-        color: Colors.green,
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
@@ -25,7 +24,7 @@ class ContactScreenWidget extends StatelessWidget {
                         pause: Duration(seconds: 1),
                         isRepeatingAnimation: false,
                         text: [
-                          "Contact",
+                          "Coming Soon",
                         ],
                         textStyle: TextStyle(
                             fontSize: MediaQuery.of(context).size.width * 0.08,
